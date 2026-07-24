@@ -30,6 +30,21 @@ export function CompanyDetail() {
   const ins = company.insight
   const opMargin = ((company.operatingProfitOku / company.revenueOku) * 100).toFixed(1)
   const profitPerHead = Math.round((company.operatingProfitOku * 100000000) / company.employees / 10000)
+  const revLabel = company.revenueLabel ?? '売上高'
+  const profLabel = company.profitLabel ?? '営業利益'
+  // 億円ベースの金額を「48兆367億」のような読みやすい表記に分解する
+  const fmtOku = (oku: number): { main: string; unit: string } => {
+    if (oku >= 10000) {
+      const cho = Math.floor(oku / 10000)
+      const rest = oku % 10000
+      return rest
+        ? { main: `${cho}兆${rest.toLocaleString()}`, unit: '億円' }
+        : { main: `${cho}`, unit: '兆円' }
+    }
+    return { main: oku.toLocaleString(), unit: '億円' }
+  }
+  const rev = fmtOku(company.revenueOku)
+  const prof = fmtOku(company.operatingProfitOku)
 
   return (
     <div className="page">
@@ -107,6 +122,9 @@ export function CompanyDetail() {
           <div className="card-title">項目別スコア（働きがい・組織文化・働きやすさ 他）</div>
           <ScoreBars scores={ins.scores} />
         </div>
+        <p className="muted small disclaimer">
+          ※ 口コミサマリー・スコアはプロトタイプ用のサンプルデータです。実サービスでは口コミ本体のデータベースから集計・要約されます。
+        </p>
       </section>
 
       {/* 外部情報（IR・財務） */}
@@ -116,22 +134,23 @@ export function CompanyDetail() {
             <Icon name="trendingUp" size={18} />
           </span>
           <h2>企業データ（外部情報）</h2>
+          <span className="muted small">{company.fiscalLabel}・公表資料に基づく概数</span>
         </div>
         <div className="kpi-grid">
           <div className="kpi">
-            <div className="kpi-label">売上高</div>
-            <div className="kpi-value">{company.revenueOku.toLocaleString()}<span>億円</span></div>
+            <div className="kpi-label">{revLabel}</div>
+            <div className="kpi-value">{rev.main}<span>{rev.unit}</span></div>
           </div>
           <div className="kpi">
-            <div className="kpi-label">営業利益</div>
-            <div className="kpi-value">{company.operatingProfitOku.toLocaleString()}<span>億円</span></div>
+            <div className="kpi-label">{profLabel}</div>
+            <div className="kpi-value">{prof.main}<span>{prof.unit}</span></div>
           </div>
           <div className="kpi">
-            <div className="kpi-label">営業利益率</div>
+            <div className="kpi-label">{profLabel}率</div>
             <div className="kpi-value">{opMargin}<span>%</span></div>
           </div>
           <div className="kpi">
-            <div className="kpi-label">従業員1人あたり営業利益</div>
+            <div className="kpi-label">従業員1人あたり{profLabel}</div>
             <div className="kpi-value">{profitPerHead.toLocaleString()}<span>万円</span></div>
           </div>
           <div className="kpi">
@@ -144,7 +163,7 @@ export function CompanyDetail() {
           </div>
         </div>
         <p className="muted small">
-          ※ Lv4以上のクイズでは、これらの財務データを題材にした設問が出題されます。
+          ※ 財務データは{company.fiscalLabel}の公表値に基づく概数です。Lv4以上のクイズでは、これらのデータを題材にした設問が出題されます。
         </p>
       </section>
     </div>

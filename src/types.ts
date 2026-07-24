@@ -48,12 +48,18 @@ export interface Company {
   industryId: string
   logoColor: string
   tagline: string
-  /** 外部情報（IR等） */
+  /** 外部情報（各社公表の決算資料に基づく概数） */
   employees: number
   founded: number
   revenueOku: number // 売上高（億円）
   operatingProfitOku: number // 営業利益（億円）
-  /** 口コミ由来の内部分析 */
+  /** 決算期の表示（例: 2025年3月期） */
+  fiscalLabel: string
+  /** 「売上高」に相当する項目名の上書き（例: 銀行の「経常収益」） */
+  revenueLabel?: string
+  /** 「営業利益」に相当する項目名の上書き（例: 銀行の「経常利益」） */
+  profitLabel?: string
+  /** 口コミ由来の内部分析（プロトタイプ用サンプルデータ） */
   insight: KuchikomiInsight
 }
 

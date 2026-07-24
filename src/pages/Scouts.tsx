@@ -41,6 +41,7 @@ export function Scouts() {
   return (
     <div className="page">
       <h1>スカウト</h1>
+      <p className="muted small">※ デモ環境のため、表示されるスカウトはサンプルデータです。</p>
       {!resumeCompleted && (
         <div className="banner warn">
           <Icon name="mail" size={17} /> 返信するにはウェブ履歴書の登録が必要です。

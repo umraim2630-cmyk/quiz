@@ -935,6 +935,9 @@ a.stat-card:hover {
   padding: 4px 12px;
   border-radius: 999px;
 }
+.disclaimer {
+  margin: 12px 0 0;
+}
 .insight-grid {
   display: grid;
   grid-template-columns: 320px 1fr;
@@ -1360,7 +1363,10 @@ a.stat-card:hover {
   .stat-grid {
     grid-template-columns: 1fr;
   }
-  .insight-grid {
+  .disclaimer {
+  margin: 12px 0 0;
+}
+.insight-grid {
     grid-template-columns: 1fr;
   }
   .radar-card {

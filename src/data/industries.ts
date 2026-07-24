@@ -1,5 +1,6 @@
 import type { Industry } from '../types'
 
+// 市場規模・成長率は公的統計・調査会社の公表値に基づく概数。
 export const INDUSTRIES: Industry[] = [
   {
     id: 'it',
@@ -7,10 +8,10 @@ export const INDUSTRIES: Industry[] = [
     icon: 'laptop',
     color: '#4f46e5',
     overview:
-      'SaaS・クラウド・AIを中心に成長を続ける産業。受託開発から自社プロダクトへのシフトが進み、リカーリング型のビジネスモデルが評価される。',
-    marketSizeCho: 30.5,
-    growthRate: 6.8,
-    keywords: ['SaaS', 'クラウド', '生成AI', 'DX', 'リカーリング'],
+      'SIer・SaaS・クラウド・AIを中心に拡大する産業。国内IT市場は約25兆円規模と推計され、DX需要を背景に安定成長が続く。受託開発（SI）と自社プロダクト（SaaS）では、収益構造もカルチャーも大きく異なるのが企業選びのポイント。',
+    marketSizeCho: 25.0,
+    growthRate: 5.0,
+    keywords: ['SI', 'SaaS', 'クラウド', '生成AI', 'DX'],
   },
   {
     id: 'finance',
@@ -18,10 +19,10 @@ export const INDUSTRIES: Industry[] = [
     icon: 'landmark',
     color: '#0e9f6e',
     overview:
-      '銀行・証券・保険を核とする産業。低金利環境からの転換、フィンテック連携、手数料ビジネスから資産運用ビジネスへの構造転換が論点。',
-    marketSizeCho: 95.2,
-    growthRate: 2.1,
-    keywords: ['フィンテック', '資産運用', 'ROE', '与信', '規制'],
+      '銀行・証券・保険を核とする産業（金融・保険業の名目GDPは約23兆円）。日銀のマイナス金利解除で「金利ある世界」に転換し、3メガバンクは過去最高益を更新。資産運用ビジネスの強化とフィンテック連携が次の論点。',
+    marketSizeCho: 23.0,
+    growthRate: 2.0,
+    keywords: ['金利ある世界', '利ざや', '資産運用', 'フィンテック', '与信'],
   },
   {
     id: 'consumer',
@@ -29,10 +30,10 @@ export const INDUSTRIES: Industry[] = [
     icon: 'cart',
     color: '#e05d38',
     overview:
-      'メーカーと小売が連携し、EC化・OMO・ブランド価値の最大化が競争軸。原材料高と価格転嫁、在庫回転率の管理が収益を左右する。',
-    marketSizeCho: 145.0,
-    growthRate: 1.4,
-    keywords: ['EC化率', 'OMO', 'PB', '在庫回転', '価格転嫁'],
+      '国内小売販売額は年間約163兆円（2023年・経済産業省）。EC化・OMO、PB強化、価格転嫁が競争軸で、物販のEC化率は約9%とまだ拡大余地が大きい。製造小売（SPA）のように利益構造を変えるモデルにも注目。',
+    marketSizeCho: 163.0,
+    growthRate: 2.2,
+    keywords: ['EC化率', 'OMO', 'PB', 'SPA', '在庫回転'],
   },
   {
     id: 'manufacturing',
@@ -40,10 +41,10 @@ export const INDUSTRIES: Industry[] = [
     icon: 'factory',
     color: '#0284c7',
     overview:
-      '電動化(EV)・自動運転・サプライチェーン再編が進む。設備投資と研究開発の重さ、為替感応度の高さが特徴で、営業利益率の水準が企業体力を映す。',
-    marketSizeCho: 320.0,
-    growthRate: 0.9,
-    keywords: ['EV', 'サプライチェーン', '為替', '設備投資', 'カーボンニュートラル'],
+      '自動車は日本の基幹産業で、関連産業の就業人口は約550万人。電動化（EV・HV）、自動運転、サプライチェーン強靭化への巨額投資が進む。輸出比率が高く、為替感応度の高さが業績を大きく左右する。',
+    marketSizeCho: 70.0,
+    growthRate: 1.0,
+    keywords: ['EV・HV', 'マルチパスウェイ', 'サプライチェーン', '為替感応度', 'カーボンニュートラル'],
   },
   {
     id: 'consulting',
@@ -51,10 +52,10 @@ export const INDUSTRIES: Industry[] = [
     icon: 'chart',
     color: '#8b5cf6',
     overview:
-      '戦略・IT・人事など高付加価値の助言業。人材が最大の資産で、稼働率(Utilization)と単価が収益構造を決める。DX需要で市場は拡大基調。',
-    marketSizeCho: 8.7,
-    growthRate: 9.5,
-    keywords: ['稼働率', 'DX案件', 'ファーム', 'アップオアアウト', '単価'],
+      '戦略立案からDX実行支援までを担う高付加価値サービス業。国内コンサルティング市場は1兆円超と推計され、年10%前後の高成長が続く。人が資産のビジネスで、「人数×稼働率×単価」が収益構造を決める。',
+    marketSizeCho: 1.2,
+    growthRate: 10.0,
+    keywords: ['稼働率', '単価', 'DX案件', 'ワンプール', 'アップオアアウト'],
   },
 ]
 
