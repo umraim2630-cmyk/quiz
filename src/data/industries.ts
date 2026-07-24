@@ -4,7 +4,8 @@ export const INDUSTRIES: Industry[] = [
   {
     id: 'it',
     name: 'IT・ソフトウェア',
-    emoji: '💻',
+    icon: 'laptop',
+    color: '#4f46e5',
     overview:
       'SaaS・クラウド・AIを中心に成長を続ける産業。受託開発から自社プロダクトへのシフトが進み、リカーリング型のビジネスモデルが評価される。',
     marketSizeCho: 30.5,
@@ -14,7 +15,8 @@ export const INDUSTRIES: Industry[] = [
   {
     id: 'finance',
     name: '金融・保険',
-    emoji: '🏦',
+    icon: 'landmark',
+    color: '#0e9f6e',
     overview:
       '銀行・証券・保険を核とする産業。低金利環境からの転換、フィンテック連携、手数料ビジネスから資産運用ビジネスへの構造転換が論点。',
     marketSizeCho: 95.2,
@@ -24,7 +26,8 @@ export const INDUSTRIES: Industry[] = [
   {
     id: 'consumer',
     name: '消費財・小売',
-    emoji: '🛒',
+    icon: 'cart',
+    color: '#e05d38',
     overview:
       'メーカーと小売が連携し、EC化・OMO・ブランド価値の最大化が競争軸。原材料高と価格転嫁、在庫回転率の管理が収益を左右する。',
     marketSizeCho: 145.0,
@@ -34,7 +37,8 @@ export const INDUSTRIES: Industry[] = [
   {
     id: 'manufacturing',
     name: '製造・自動車',
-    emoji: '🏭',
+    icon: 'factory',
+    color: '#0284c7',
     overview:
       '電動化(EV)・自動運転・サプライチェーン再編が進む。設備投資と研究開発の重さ、為替感応度の高さが特徴で、営業利益率の水準が企業体力を映す。',
     marketSizeCho: 320.0,
@@ -44,7 +48,8 @@ export const INDUSTRIES: Industry[] = [
   {
     id: 'consulting',
     name: 'コンサル・専門サービス',
-    emoji: '📊',
+    icon: 'chart',
+    color: '#8b5cf6',
     overview:
       '戦略・IT・人事など高付加価値の助言業。人材が最大の資産で、稼働率(Utilization)と単価が収益構造を決める。DX需要で市場は拡大基調。',
     marketSizeCho: 8.7,

@@ -4,6 +4,7 @@ import { useApp } from '../context/AppContext'
 import { buildQuiz, buildReviewAll, difficultyLabel } from '../lib/quizEngine'
 import type { Question, QuestionType } from '../types'
 import { companyById } from '../data/companies'
+import { Icon } from '../components/Icon'
 import { industryById } from '../data/industries'
 
 export function QuizPlay() {
@@ -76,6 +77,9 @@ export function QuizPlay() {
     return (
       <div className="page narrow">
         <div className="result-card">
+          <div className="result-trophy">
+            <Icon name="sparkle" size={30} />
+          </div>
           <div className="result-score">{pct}%</div>
           <h2>おつかれさまでした！</h2>
           <p className="muted">
@@ -118,7 +122,11 @@ export function QuizPlay() {
           <span className={`chip lv${q.difficulty}`}>
             {difficultyLabel(q.difficulty)}（Lv{q.difficulty}）
           </span>
-          {q.financial && <span className="chip fin">💰 財務データ問題</span>}
+          {q.financial && (
+            <span className="chip fin">
+              <Icon name="yen" size={13} /> 財務データ問題
+            </span>
+          )}
         </div>
         <h2 className="quiz-prompt">{q.prompt}</h2>
 
@@ -142,6 +150,7 @@ export function QuizPlay() {
         {revealed && (
           <div className={`explain ${selected === q.answerIndex ? 'ok' : 'ng'}`}>
             <div className="explain-head">
+              <Icon name={selected === q.answerIndex ? 'checkCircle' : 'flag'} size={18} />
               {selected === q.answerIndex ? '正解！' : '不正解'}
             </div>
             <p>{q.explanation}</p>

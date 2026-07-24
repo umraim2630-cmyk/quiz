@@ -1,5 +1,6 @@
 import { NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
+import { Icon } from './Icon'
 
 export function Layout() {
   const { state, logout } = useApp()
@@ -15,19 +16,27 @@ export function Layout() {
     <div className="app-shell">
       <header className="topbar">
         <NavLink to="/" className="brand">
-          <span className="brand-mark">口</span>
+          <span className="brand-mark">Q</span>
           <span>Kuchikomi Quiz</span>
         </NavLink>
         <nav className="topnav">
           <NavLink to="/" end>
-            ホーム
+            <Icon name="home" size={17} />
+            <span>ホーム</span>
           </NavLink>
-          <NavLink to="/quiz">クイズ</NavLink>
+          <NavLink to="/quiz">
+            <Icon name="zap" size={17} />
+            <span>クイズ</span>
+          </NavLink>
           <NavLink to="/scouts" className="nav-scout">
-            スカウト
+            <Icon name="mail" size={17} />
+            <span>スカウト</span>
             {unread > 0 && <span className="badge">{unread}</span>}
           </NavLink>
-          <NavLink to="/resume">履歴書</NavLink>
+          <NavLink to="/resume">
+            <Icon name="fileText" size={17} />
+            <span>履歴書</span>
+          </NavLink>
         </nav>
         <div className="topbar-user">
           <span className="user-name">{state.user?.name}</span>

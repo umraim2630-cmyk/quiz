@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
+import { Icon } from '../components/Icon'
 
 export function Login() {
   const { login } = useApp()
@@ -20,7 +21,7 @@ export function Login() {
     <div className="auth-wrap">
       <div className="auth-hero">
         <div className="brand brand-lg">
-          <span className="brand-mark">口</span>
+          <span className="brand-mark">Q</span>
           <span>Kuchikomi Quiz</span>
         </div>
         <h1>口コミデータで学ぶ、企業・業界研究クイズ</h1>
@@ -29,10 +30,30 @@ export function Login() {
           就活を「内定後」ではなく「就活前」から始め、入社後ギャップを防ぎます。
         </p>
         <ul className="hero-points">
-          <li>📊 口コミ由来の内部分析（働きがい・組織文化・働きやすさ 等）を可視化</li>
-          <li>🎯 習熟度に応じて難易度が上がる適応型クイズ</li>
-          <li>💰 高難易度では財務情報を題材にした設問も</li>
-          <li>✉️ クイズ実績をもとに企業・エージェントからスカウトが届く</li>
+          <li>
+            <span className="hero-ic">
+              <Icon name="search" size={17} />
+            </span>
+            口コミ由来の内部分析（働きがい・組織文化・働きやすさ 等）を可視化
+          </li>
+          <li>
+            <span className="hero-ic">
+              <Icon name="target" size={17} />
+            </span>
+            習熟度に応じて難易度が上がる適応型クイズ
+          </li>
+          <li>
+            <span className="hero-ic">
+              <Icon name="yen" size={17} />
+            </span>
+            高難易度では財務情報を題材にした設問も
+          </li>
+          <li>
+            <span className="hero-ic">
+              <Icon name="mail" size={17} />
+            </span>
+            クイズ実績をもとに企業・エージェントからスカウトが届く
+          </li>
         </ul>
       </div>
 

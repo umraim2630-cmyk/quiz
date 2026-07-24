@@ -3,6 +3,7 @@ import { industryById } from '../data/industries'
 import { companiesByIndustry } from '../data/companies'
 import { useApp } from '../context/AppContext'
 import { achievementRate } from '../lib/quizEngine'
+import { Icon, Star } from '../components/Icon'
 
 export function IndustryDetail() {
   const { id } = useParams<{ id: string }>()
@@ -32,7 +33,12 @@ export function IndustryDetail() {
       </Link>
 
       <div className="detail-hero">
-        <div className="detail-logo emoji lg">{industry.emoji}</div>
+        <div
+          className="detail-logo tint"
+          style={{ color: industry.color, background: `color-mix(in srgb, ${industry.color} 12%, transparent)` }}
+        >
+          <Icon name={industry.icon} size={30} />
+        </div>
         <div>
           <div className="detail-industry">業界研究</div>
           <h1>{industry.name}</h1>
@@ -81,7 +87,9 @@ export function IndustryDetail() {
                 <div className="target-tag">{c.tagline}</div>
                 <div className="target-meta">
                   <span>口コミ {c.insight.reviewCount.toLocaleString()}件</span>
-                  <span>★ {c.insight.overall.toFixed(1)}</span>
+                  <span className="star-val">
+                    <Star size={13} /> {c.insight.overall.toFixed(1)}
+                  </span>
                 </div>
               </div>
             </Link>

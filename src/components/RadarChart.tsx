@@ -44,7 +44,7 @@ export function RadarChart({ scores, size = 280, color = '#4f7cff' }: Props) {
             key={lv}
             points={pts}
             fill="none"
-            stroke="#e2e6ef"
+            stroke="var(--border)"
             strokeWidth={1}
           />
         )
@@ -60,7 +60,7 @@ export function RadarChart({ scores, size = 280, color = '#4f7cff' }: Props) {
             y1={cy}
             x2={p.x}
             y2={p.y}
-            stroke="#e2e6ef"
+            stroke="var(--border)"
             strokeWidth={1}
           />
         )
@@ -83,7 +83,7 @@ export function RadarChart({ scores, size = 280, color = '#4f7cff' }: Props) {
             textAnchor="middle"
             dominantBaseline="middle"
             fontSize={11}
-            fill="#3a4256"
+            fill="var(--text)"
             fontWeight={600}
           >
             {SCORE_LABELS[k]}

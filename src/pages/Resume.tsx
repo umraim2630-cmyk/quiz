@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 import { INDUSTRIES } from '../data/industries'
 import type { WebResume } from '../types'
+import { Icon } from '../components/Icon'
 
 const emptyResume = (name: string): WebResume => ({
   fullName: name,
@@ -58,7 +59,7 @@ export function Resume() {
 
       {state.resume?.completed && (
         <div className="banner ok">
-          ✅ 履歴書は登録済みです。スカウトに返信できます。
+          <Icon name="checkCircle" size={17} /> 履歴書は登録済みです。スカウトに返信できます。
           <Link to="/scouts" className="banner-link">
             スカウトを見る →
           </Link>
@@ -109,7 +110,7 @@ export function Resume() {
                 className={form.desiredIndustries.includes(ind.id) ? 'chip-sel on' : 'chip-sel'}
                 onClick={() => toggleIndustry(ind.id)}
               >
-                {ind.emoji} {ind.name}
+                {ind.name}
               </button>
             ))}
           </div>

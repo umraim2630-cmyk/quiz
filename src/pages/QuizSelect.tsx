@@ -8,6 +8,7 @@ import {
   unlockedDifficulty,
   wrongQueueCount,
 } from '../lib/quizEngine'
+import { Icon } from '../components/Icon'
 
 export function QuizSelect() {
   const { state } = useApp()
@@ -23,8 +24,11 @@ export function QuizSelect() {
       </p>
 
       <section className={`review-banner ${reviewFocus ? 'focus' : ''}`}>
+        <span className="review-ic">
+          <Icon name="refresh" size={22} />
+        </span>
         <div>
-          <div className="review-title">🔁 間違えた問題だけを復習</div>
+          <div className="review-title">間違えた問題だけを復習</div>
           <div className="muted">現在 {wrongTotal} 問が復習キューにあります。正解するとキューから外れます。</div>
         </div>
         {wrongTotal > 0 ? (
@@ -37,7 +41,10 @@ export function QuizSelect() {
       </section>
 
       <div className="section-head">
-        <h2>🏢 企業研究</h2>
+        <span className="sec-ic">
+          <Icon name="building" size={18} />
+        </span>
+        <h2>企業研究</h2>
       </div>
       <div className="quiz-list">
         {COMPANIES.map((c) => {
@@ -71,7 +78,10 @@ export function QuizSelect() {
       </div>
 
       <div className="section-head">
-        <h2>🌐 業界研究</h2>
+        <span className="sec-ic">
+          <Icon name="globe" size={18} />
+        </span>
+        <h2>業界研究</h2>
       </div>
       <div className="quiz-list">
         {INDUSTRIES.map((ind) => {
@@ -79,7 +89,12 @@ export function QuizSelect() {
           const rate = achievementRate(state.progress, 'industry', ind.id)
           return (
             <div className="quiz-row" key={ind.id}>
-              <div className="quiz-row-logo emoji">{ind.emoji}</div>
+              <div
+                className="quiz-row-logo tint"
+                style={{ color: ind.color, background: `color-mix(in srgb, ${ind.color} 12%, transparent)` }}
+              >
+                <Icon name={ind.icon} size={20} />
+              </div>
               <div className="quiz-row-main">
                 <div className="quiz-row-name">{ind.name}</div>
                 <div className="quiz-row-meta">

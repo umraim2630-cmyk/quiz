@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 import { companyById } from '../data/companies'
 import type { Scout } from '../types'
+import { Icon } from '../components/Icon'
 
 export function Scouts() {
   const { state, readScout, reply, resumeCompleted } = useApp()
@@ -42,7 +43,7 @@ export function Scouts() {
       <h1>スカウト</h1>
       {!resumeCompleted && (
         <div className="banner warn">
-          ✉️ 返信するにはウェブ履歴書の登録が必要です。
+          <Icon name="mail" size={17} /> 返信するにはウェブ履歴書の登録が必要です。
           <Link to="/resume" className="banner-link">
             履歴書を登録する →
           </Link>
@@ -63,7 +64,7 @@ export function Scouts() {
                   className="scout-avatar"
                   style={{ background: company?.logoColor ?? (s.sender === 'agent' ? '#7048e8' : '#495057') }}
                 >
-                  {s.sender === 'agent' ? '🧑‍💼' : s.senderName.slice(0, 1)}
+                  {s.sender === 'agent' ? <Icon name="user" size={19} /> : s.senderName.slice(0, 1)}
                 </div>
                 <div className="scout-item-body">
                   <div className="scout-item-top">
@@ -129,7 +130,7 @@ export function Scouts() {
                   </>
                 ) : (
                   <div className="locked">
-                    🔒 返信するには
+                    <Icon name="lock" size={15} /> 返信するには
                     <Link to="/resume">ウェブ履歴書の登録</Link>
                     が必要です。
                   </div>

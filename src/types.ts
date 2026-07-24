@@ -60,7 +60,10 @@ export interface Company {
 export interface Industry {
   id: string
   name: string
-  emoji: string
+  /** SVGアイコン名（components/Icon.tsx） */
+  icon: string
+  /** テーマカラー */
+  color: string
   overview: string
   /** 市場規模（兆円） */
   marketSizeCho: number

@@ -3,6 +3,7 @@ import { companyById } from '../data/companies'
 import { industryById } from '../data/industries'
 import { RadarChart } from '../components/RadarChart'
 import { ScoreBars } from '../components/ScoreBars'
+import { Icon, Star } from '../components/Icon'
 import { useApp } from '../context/AppContext'
 import { achievementRate } from '../lib/quizEngine'
 
@@ -42,13 +43,15 @@ export function CompanyDetail() {
         </div>
         <div>
           <div className="detail-industry">
-            {industry?.emoji} {industry?.name}
+            {industry && <Icon name={industry.icon} size={14} />} {industry?.name}
           </div>
           <h1>{company.name}</h1>
           <p className="muted">{company.tagline}</p>
         </div>
         <div className="detail-cta">
-          <div className="overall-star">★ {ins.overall.toFixed(1)}</div>
+          <div className="overall-star">
+            <Star size={20} /> {ins.overall.toFixed(1)}
+          </div>
           <div className="muted small">{ins.reviewCount.toLocaleString()}件の口コミ</div>
           <Link className="btn-primary" to={`/quiz/play/company/${company.id}`}>
             この企業のクイズに挑戦（達成率 {Math.round(rate * 100)}%）
@@ -59,7 +62,10 @@ export function CompanyDetail() {
       {/* 口コミ由来の内部分析（本アプリの中核） */}
       <section className="insight-block">
         <div className="section-head">
-          <h2>🔍 口コミからの内部分析</h2>
+          <span className="sec-ic">
+            <Icon name="search" size={18} />
+          </span>
+          <h2>口コミからの内部分析</h2>
           <span className="pill">{ins.reviewCount.toLocaleString()}件を要約</span>
         </div>
 
@@ -74,7 +80,9 @@ export function CompanyDetail() {
             <p className="summary-text">{ins.summary}</p>
             <div className="pn-grid">
               <div>
-                <div className="pn-title good">👍 評価されている点</div>
+                <div className="pn-title good">
+                  <Icon name="thumbsUp" size={15} /> 評価されている点
+                </div>
                 <ul>
                   {ins.positives.map((p) => (
                     <li key={p}>{p}</li>
@@ -82,7 +90,9 @@ export function CompanyDetail() {
                 </ul>
               </div>
               <div>
-                <div className="pn-title bad">🤔 課題とされる点</div>
+                <div className="pn-title bad">
+                  <Icon name="flag" size={15} /> 課題とされる点
+                </div>
                 <ul>
                   {ins.negatives.map((p) => (
                     <li key={p}>{p}</li>
@@ -102,7 +112,10 @@ export function CompanyDetail() {
       {/* 外部情報（IR・財務） */}
       <section>
         <div className="section-head">
-          <h2>📈 企業データ（外部情報）</h2>
+          <span className="sec-ic">
+            <Icon name="trendingUp" size={18} />
+          </span>
+          <h2>企業データ（外部情報）</h2>
         </div>
         <div className="kpi-grid">
           <div className="kpi">
