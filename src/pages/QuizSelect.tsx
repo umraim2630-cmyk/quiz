@@ -20,7 +20,7 @@ export function QuizSelect() {
     <div className="page">
       <h1>クイズ</h1>
       <p className="muted">
-        習熟度が上がるほど難易度が解放されます。Lv4以上では財務情報を題材にした問題が登場します。
+        習熟度が上がるほど難易度が解放されます。Lv4以上では各社の決算発表資料を題材にした問題が登場します。
       </p>
 
       <section className={`review-banner ${reviewFocus ? 'focus' : ''}`}>
@@ -44,7 +44,7 @@ export function QuizSelect() {
         <span className="sec-ic">
           <Icon name="building" size={18} />
         </span>
-        <h2>企業研究</h2>
+        <h2>ファーム研究</h2>
       </div>
       <div className="quiz-list">
         {COMPANIES.map((c) => {
@@ -53,7 +53,7 @@ export function QuizSelect() {
           return (
             <div className="quiz-row" key={c.id}>
               <div className="quiz-row-logo" style={{ background: c.logoColor }}>
-                {c.name.slice(0, 1)}
+                {c.monogram}
               </div>
               <div className="quiz-row-main">
                 <div className="quiz-row-name">{c.name}</div>
@@ -81,7 +81,7 @@ export function QuizSelect() {
         <span className="sec-ic">
           <Icon name="globe" size={18} />
         </span>
-        <h2>業界研究</h2>
+        <h2>コンサル業界研究</h2>
       </div>
       <div className="quiz-list">
         {INDUSTRIES.map((ind) => {

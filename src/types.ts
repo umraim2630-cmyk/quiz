@@ -45,7 +45,10 @@ export interface KuchikomiInsight {
 export interface Company {
   id: string
   name: string
-  industryId: string
+  /** ファームの分類（例: 総合系（日系）, シンクタンク系） */
+  segment: string
+  /** 仮ロゴ用モノグラム（例: BC, NRI） */
+  monogram: string
   logoColor: string
   tagline: string
   /** 外部情報（各社公表の決算資料に基づく概数） */
@@ -70,11 +73,9 @@ export interface Industry {
   icon: string
   /** テーマカラー */
   color: string
+  /** カード用の一行サブタイトル */
+  subtitle: string
   overview: string
-  /** 市場規模（兆円） */
-  marketSizeCho: number
-  /** 前年比成長率(%) */
-  growthRate: number
   keywords: string[]
 }
 

@@ -6,7 +6,7 @@ import type { ProgressMap } from './quizEngine'
 // 実サービスでは本体サービスのAPI/DBに置き換わる。
 // ------------------------------------------------------------------
 
-const KEY = 'kuchikomi-quiz-state-v2'
+const KEY = 'kuchikomi-quiz-state-v3'
 
 export interface PersistedState {
   user: User | null

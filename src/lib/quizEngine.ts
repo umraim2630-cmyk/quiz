@@ -125,6 +125,10 @@ export function wrongQueueCount(map: ProgressMap, type?: QuestionType, targetId?
   return qs.filter((q) => getProgress(map, q.id).lastWrong).length
 }
 
+/** 対象の収録問題数 */
+export const questionCountFor = (type: QuestionType, targetId: string): number =>
+  questionsForTarget(type, targetId).length
+
 /** 難易度ラベル */
 export const difficultyLabel = (d: number): string =>
   ['', '入門', '基礎', '標準', '応用（財務）', '難関（財務）'][d] ?? `Lv${d}`

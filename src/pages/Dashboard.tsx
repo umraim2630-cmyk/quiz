@@ -43,7 +43,7 @@ export function Dashboard() {
       <div className="hello">
         <div>
           <h1>こんにちは、{state.user?.name} さん</h1>
-          <p className="muted">クイズで企業・業界の「内側」を知り、あなたに合う会社を見つけましょう。</p>
+          <p className="muted">クイズでコンサル業界とファームの「内側」を知り、あなたに合うファームを見つけましょう。</p>
         </div>
       </div>
 
@@ -86,8 +86,8 @@ export function Dashboard() {
           <span className="sec-ic">
             <Icon name="building" size={18} />
           </span>
-          <h2>企業研究クイズ</h2>
-          <span className="muted">口コミの内部分析を教材に、企業ごとの達成率を上げよう</span>
+          <h2>ファーム研究クイズ</h2>
+          <span className="muted">口コミの内部分析と決算資料を教材に、ファームごとの達成率を上げよう</span>
         </div>
         <div className="card-grid">
           {COMPANIES.map((c) => {
@@ -95,11 +95,11 @@ export function Dashboard() {
             return (
               <Link to={`/company/${c.id}`} className="target-card" key={c.id}>
                 <div className="target-logo" style={{ background: c.logoColor }}>
-                  {c.name.slice(0, 1)}
+                  {c.monogram}
                 </div>
                 <div className="target-body">
                   <div className="target-name">{c.name}</div>
-                  <div className="target-tag">{c.tagline}</div>
+                  <div className="target-tag">{c.segment}｜{c.tagline}</div>
                   <div className="mini-bar">
                     <span style={{ width: `${rate * 100}%` }} />
                   </div>
@@ -121,8 +121,8 @@ export function Dashboard() {
           <span className="sec-ic">
             <Icon name="globe" size={18} />
           </span>
-          <h2>業界研究クイズ</h2>
-          <span className="muted">業界構造とビジネスモデルの勘所をつかむ</span>
+          <h2>コンサル業界研究クイズ</h2>
+          <span className="muted">業界構造・キャリア・決算の読み方をおさえる</span>
         </div>
         <div className="card-grid">
           {INDUSTRIES.map((ind) => {
@@ -137,7 +137,7 @@ export function Dashboard() {
                 </div>
                 <div className="target-body">
                   <div className="target-name">{ind.name}</div>
-                  <div className="target-tag">市場規模 {ind.marketSizeCho}兆円 / 成長率 {ind.growthRate}%</div>
+                  <div className="target-tag">{ind.subtitle}</div>
                   <div className="mini-bar">
                     <span style={{ width: `${rate * 100}%` }} />
                   </div>

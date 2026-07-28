@@ -65,7 +65,7 @@ export function Scouts() {
                   className="scout-avatar"
                   style={{ background: company?.logoColor ?? (s.sender === 'agent' ? '#7048e8' : '#495057') }}
                 >
-                  {s.sender === 'agent' ? <Icon name="user" size={19} /> : s.senderName.slice(0, 1)}
+                  {s.sender === 'agent' ? <Icon name="user" size={19} /> : (company?.monogram ?? s.senderName.slice(0, 1))}
                 </div>
                 <div className="scout-item-body">
                   <div className="scout-item-top">

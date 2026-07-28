@@ -1,6 +1,5 @@
 import { Link, useParams } from 'react-router-dom'
 import { companyById } from '../data/companies'
-import { industryById } from '../data/industries'
 import { RadarChart } from '../components/RadarChart'
 import { ScoreBars } from '../components/ScoreBars'
 import { Icon, Star } from '../components/Icon'
@@ -25,7 +24,6 @@ export function CompanyDetail() {
     )
   }
 
-  const industry = industryById(company.industryId)
   const rate = achievementRate(state.progress, 'company', company.id)
   const ins = company.insight
   const opMargin = ((company.operatingProfitOku / company.revenueOku) * 100).toFixed(1)
@@ -54,11 +52,11 @@ export function CompanyDetail() {
 
       <div className="detail-hero">
         <div className="detail-logo" style={{ background: company.logoColor }}>
-          {company.name.slice(0, 1)}
+          {company.monogram}
         </div>
         <div>
           <div className="detail-industry">
-            {industry && <Icon name={industry.icon} size={14} />} {industry?.name}
+            <Icon name="briefcase" size={14} /> {company.segment}
           </div>
           <h1>{company.name}</h1>
           <p className="muted">{company.tagline}</p>
@@ -123,7 +121,7 @@ export function CompanyDetail() {
           <ScoreBars scores={ins.scores} />
         </div>
         <p className="muted small disclaimer">
-          ※ 口コミサマリー・スコアはプロトタイプ用のサンプルデータです。実サービスでは口コミ本体のデータベースから集計・要約されます。
+          ※ 口コミサマリー・スコアはプロトタイプ用のサンプルデータです。ロゴは仮ロゴ（モノグラム）を使用しています。実サービスでは口コミ本体のデータベースと公式ロゴに置き換わります。
         </p>
       </section>
 

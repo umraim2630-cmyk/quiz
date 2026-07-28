@@ -1,9 +1,19 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
-import { INDUSTRIES } from '../data/industries'
 import type { WebResume } from '../types'
 import { Icon } from '../components/Icon'
+
+const DESIRED_FIELDS = [
+  '戦略系',
+  '総合系（日系）',
+  '総合系（外資）',
+  'シンクタンク系',
+  'IT・デジタル系',
+  'FAS・財務アドバイザリー',
+  '組織・人事系',
+  '中堅・中小企業支援',
+]
 
 const emptyResume = (name: string): WebResume => ({
   fullName: name,
@@ -100,17 +110,17 @@ export function Resume() {
 
         <div className="field">
           <div className="field-label">
-            志望業界 <span className="req">必須</span>（複数選択可）
+            志望領域 <span className="req">必須</span>（複数選択可）
           </div>
           <div className="chip-select">
-            {INDUSTRIES.map((ind) => (
+            {DESIRED_FIELDS.map((field) => (
               <button
                 type="button"
-                key={ind.id}
-                className={form.desiredIndustries.includes(ind.id) ? 'chip-sel on' : 'chip-sel'}
-                onClick={() => toggleIndustry(ind.id)}
+                key={field}
+                className={form.desiredIndustries.includes(field) ? 'chip-sel on' : 'chip-sel'}
+                onClick={() => toggleIndustry(field)}
               >
-                {ind.name}
+                {field}
               </button>
             ))}
           </div>
