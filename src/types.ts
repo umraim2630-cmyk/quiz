@@ -94,6 +94,8 @@ export interface Question {
   choices: string[]
   answerIndex: number
   explanation: string
+  /** 出典（決算短信・説明資料など） */
+  source?: string
 }
 
 // ------------------------------------------------------------------

@@ -829,8 +829,13 @@ a.stat-card:hover {
   color: var(--bad);
 }
 .explain p {
-  margin: 0 0 14px;
+  margin: 0 0 10px;
   font-size: 0.92rem;
+}
+.explain-src {
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-bottom: 14px;
 }
 
 .result-card {

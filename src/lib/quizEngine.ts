@@ -88,7 +88,7 @@ export function buildQuiz(
   targetId: string,
   opts: BuildOptions = {},
 ): Question[] {
-  const { wrongOnly = false, limit = 8 } = opts
+  const { wrongOnly = false, limit = 10 } = opts
   const unlocked = unlockedDifficulty(map, type, targetId)
   let pool = questionsForTarget(type, targetId).filter((q) => q.difficulty <= unlocked)
 
@@ -131,4 +131,4 @@ export const questionCountFor = (type: QuestionType, targetId: string): number =
 
 /** 難易度ラベル */
 export const difficultyLabel = (d: number): string =>
-  ['', '入門', '基礎', '標準', '応用（財務）', '難関（財務）'][d] ?? `Lv${d}`
+  ['', '初級', '初級', '中級', '上級', '最上級'][d] ?? `Lv${d}`

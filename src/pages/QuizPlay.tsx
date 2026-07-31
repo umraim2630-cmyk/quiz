@@ -53,6 +53,17 @@ export function QuizPlay() {
   const q = questions[index]
   const isLast = index === questions.length - 1
 
+  // 選択肢の表示順を問題ごとにシャッフル（正解が特定の位置に偏らないようにする）
+  const order = useMemo(() => {
+    const idx = q.choices.map((_, i) => i)
+    for (let i = idx.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[idx[i], idx[j]] = [idx[j], idx[i]]
+    }
+    return idx
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [q.id])
+
   const choose = (i: number) => {
     if (revealed) return
     setSelected(i)
@@ -131,17 +142,17 @@ export function QuizPlay() {
         <h2 className="quiz-prompt">{q.prompt}</h2>
 
         <div className="choices">
-          {q.choices.map((choice, i) => {
+          {order.map((origIdx, i) => {
             let cls = 'choice'
             if (revealed) {
-              if (i === q.answerIndex) cls += ' correct'
-              else if (i === selected) cls += ' wrong'
+              if (origIdx === q.answerIndex) cls += ' correct'
+              else if (origIdx === selected) cls += ' wrong'
               else cls += ' dim'
             }
             return (
-              <button key={i} className={cls} onClick={() => choose(i)} disabled={revealed}>
+              <button key={origIdx} className={cls} onClick={() => choose(origIdx)} disabled={revealed}>
                 <span className="choice-key">{String.fromCharCode(65 + i)}</span>
-                <span>{choice}</span>
+                <span>{q.choices[origIdx]}</span>
               </button>
             )
           })}
@@ -154,6 +165,7 @@ export function QuizPlay() {
               {selected === q.answerIndex ? '正解！' : '不正解'}
             </div>
             <p>{q.explanation}</p>
+            {q.source && <div className="explain-src">出典: {q.source}</div>}
             <button className="btn-primary" onClick={next}>
               {isLast ? '結果を見る' : '次の問題へ'}
             </button>
