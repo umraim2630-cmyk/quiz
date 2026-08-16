@@ -32,7 +32,7 @@ function sessionTitle(cfg: SessionConfig): string {
 
 export function Play() {
   const [params] = useSearchParams()
-  const { state, answer, toggleBookmark } = useApp()
+  const { state, answer, toggleBookmark, setLastSession } = useApp()
 
   const cfg = useMemo<SessionConfig>(
     () => ({
@@ -63,6 +63,14 @@ export function Play() {
   const [selected, setSelected] = useState<number | null>(null)
   const [revealed, setRevealed] = useState(false)
   const [timedOut, setTimedOut] = useState(false)
+
+  // ホームの「続きから」用に直近セッションを記録
+  useEffect(() => {
+    if (questions.length > 0) {
+      setLastSession(`/play?${params.toString()}`, sessionTitle(cfg))
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   const [correctCount, setCorrectCount] = useState(0)
   const [done, setDone] = useState(false)
   const [remaining, setRemaining] = useState(TIME_LIMIT)

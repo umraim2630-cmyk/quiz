@@ -4,8 +4,8 @@ import { Layout } from './components/Layout'
 import { Login } from './pages/Login'
 import { Subscribe } from './pages/Subscribe'
 import { Home } from './pages/Home'
-import { QuizCategory } from './pages/QuizCategory'
-import { TierDetail } from './pages/TierDetail'
+import { TargetList } from './pages/TargetList'
+import { TargetTiers } from './pages/TargetTiers'
 import { Play } from './pages/Play'
 import { Favorites } from './pages/Favorites'
 import { Progress } from './pages/Progress'
@@ -41,10 +41,10 @@ export function App() {
       <Route path="/subscribe" element={<Navigate to="/" replace />} />
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
-        <Route path="/company" element={<QuizCategory kind="company" />} />
-        <Route path="/industry" element={<QuizCategory kind="industry" />} />
-        <Route path="/company/:tier" element={<TierDetail kind="company" />} />
-        <Route path="/industry/:tier" element={<TierDetail kind="industry" />} />
+        <Route path="/company" element={<TargetList kind="company" />} />
+        <Route path="/industry" element={<TargetList kind="industry" />} />
+        <Route path="/company/:id" element={<TargetTiers kind="company" />} />
+        <Route path="/industry/:id" element={<TargetTiers kind="industry" />} />
         <Route path="/play" element={<Play />} />
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/progress" element={<Progress />} />

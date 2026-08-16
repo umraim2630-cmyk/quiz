@@ -16,6 +16,7 @@ type Action =
   | { type: 'updateAccount'; name: string }
   | { type: 'resetProgress' }
   | { type: 'demoClearTier'; kind: QuizKind; tier: Tier }
+  | { type: 'setLastSession'; path: string; label: string }
 
 const toggle = (arr: string[], id: string) =>
   arr.includes(id) ? arr.filter((x) => x !== id) : [...arr, id]
@@ -67,6 +68,8 @@ function reducer(state: PersistedState, action: Action): PersistedState {
       }
       return { ...state, progress }
     }
+    case 'setLastSession':
+      return { ...state, lastSession: { path: action.path, label: action.label } }
     default:
       return state
   }
@@ -87,6 +90,7 @@ interface AppContextValue {
   updateAccount: (name: string) => void
   resetProgress: () => void
   demoClearTier: (kind: QuizKind, tier: Tier) => void
+  setLastSession: (path: string, label: string) => void
 }
 
 const AppContext = createContext<AppContextValue | null>(null)
@@ -137,6 +141,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
     (kind: QuizKind, tier: Tier) => dispatch({ type: 'demoClearTier', kind, tier }),
     [],
   )
+  const setLastSession = useCallback(
+    (path: string, label: string) => dispatch({ type: 'setLastSession', path, label }),
+    [],
+  )
 
   const value = useMemo<AppContextValue>(
     () => ({
@@ -154,6 +162,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       updateAccount,
       resetProgress,
       demoClearTier,
+      setLastSession,
     }),
     [
       state,
@@ -170,6 +179,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       updateAccount,
       resetProgress,
       demoClearTier,
+      setLastSession,
     ],
   )
 

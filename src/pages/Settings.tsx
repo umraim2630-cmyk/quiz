@@ -89,13 +89,13 @@ export function Settings() {
         </p>
         <div className="demo-actions">
           <button className="btn-secondary btn-sm" onClick={() => demoClearTier('company', 'beginner')}>
-            企業クイズ・初級を全クリア扱いにする
+            全企業の初級を全クリア扱いにする
           </button>
           <button className="btn-secondary btn-sm" onClick={() => demoClearTier('company', 'intermediate')}>
-            企業クイズ・中級を全クリア扱いにする
+            全企業の中級を全クリア扱いにする
           </button>
           <button className="btn-secondary btn-sm" onClick={() => demoClearTier('industry', 'beginner')}>
-            業界クイズ・初級を全クリア扱いにする
+            全業界の初級を全クリア扱いにする
           </button>
           <button className="btn-ghost btn-sm" onClick={onReset}>
             進捗をリセット

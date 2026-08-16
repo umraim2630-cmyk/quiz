@@ -8,6 +8,7 @@ export const INDUSTRIES: Industry[] = [
   {
     id: 'automotive',
     name: '自動車',
+    kana: 'じどうしゃ くるま',
     icon: 'factory',
     color: '#0284c7',
     majors: ['トヨタ自動車', 'ホンダ', '日産自動車', 'スズキ'],
@@ -40,6 +41,7 @@ export const INDUSTRIES: Industry[] = [
   {
     id: 'banking',
     name: '銀行',
+    kana: 'ぎんこう きんゆう メガバンク',
     icon: 'landmark',
     color: '#0e9f6e',
     majors: ['三菱UFJフィナンシャル・グループ', '三井住友フィナンシャルグループ', 'みずほフィナンシャルグループ', 'りそなホールディングス'],
@@ -72,6 +74,7 @@ export const INDUSTRIES: Industry[] = [
   {
     id: 'retail',
     name: '小売',
+    kana: 'こうり りテール スーパー アパレル',
     icon: 'cart',
     color: '#e05d38',
     majors: ['ファーストリテイリング', 'セブン&アイ・ホールディングス', 'イオン', 'ニトリホールディングス'],
@@ -104,6 +107,7 @@ export const INDUSTRIES: Industry[] = [
   {
     id: 'game',
     name: 'ゲーム・エンタメ',
+    kana: 'げーむ エンタメ',
     icon: 'zap',
     color: '#7048e8',
     majors: ['任天堂', 'ソニーグループ', 'バンダイナムコホールディングス', 'スクウェア・エニックス'],
@@ -136,6 +140,7 @@ export const INDUSTRIES: Industry[] = [
   {
     id: 'trading',
     name: '総合商社',
+    kana: 'そうごうしょうしゃ しょうしゃ',
     icon: 'globe',
     color: '#1a3a6b',
     majors: ['三菱商事', '三井物産', '伊藤忠商事', '住友商事'],

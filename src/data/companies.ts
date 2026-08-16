@@ -11,6 +11,7 @@ export const COMPANIES: Company[] = [
   {
     id: 'toyota',
     name: 'トヨタ自動車',
+    kana: 'とよたじどうしゃ トヨタ TOYOTA',
     ticker: '7203',
     industryId: 'automotive',
     monogram: 'ト',
@@ -35,6 +36,7 @@ export const COMPANIES: Company[] = [
   {
     id: 'sony',
     name: 'ソニーグループ',
+    kana: 'そにー ソニー SONY',
     ticker: '6758',
     industryId: 'game',
     monogram: 'ソ',
@@ -59,6 +61,7 @@ export const COMPANIES: Company[] = [
   {
     id: 'mufg',
     name: '三菱UFJフィナンシャル・グループ',
+    kana: 'みつびしゆーえふじぇい 三菱UFJ MUFG',
     ticker: '8306',
     industryId: 'banking',
     monogram: '三',
@@ -83,6 +86,7 @@ export const COMPANIES: Company[] = [
   {
     id: 'fastretailing',
     name: 'ファーストリテイリング',
+    kana: 'ふぁーすとりていりんぐ ユニクロ UNIQLO',
     ticker: '9983',
     industryId: 'retail',
     monogram: 'フ',
@@ -107,6 +111,7 @@ export const COMPANIES: Company[] = [
   {
     id: 'nintendo',
     name: '任天堂',
+    kana: 'にんてんどう ニンテンドー Nintendo',
     ticker: '7974',
     industryId: 'game',
     monogram: '任',

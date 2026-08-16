@@ -18,6 +18,8 @@ export interface PersistedState {
   favUnits: string[]
   /** 進捗確認で選択した企業 */
   progressSelection: string[]
+  /** 直近のクイズセッション（ホームの「続きから」用） */
+  lastSession: { path: string; label: string } | null
 }
 
 export const defaultState = (): PersistedState => ({
@@ -29,6 +31,7 @@ export const defaultState = (): PersistedState => ({
   favIndustries: [],
   favUnits: [],
   progressSelection: [],
+  lastSession: null,
 })
 
 export function loadState(): PersistedState {

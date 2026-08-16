@@ -21,6 +21,8 @@ export type QuizKind = 'company' | 'industry'
 export interface Company {
   id: string
   name: string
+  /** 検索用の読み仮名 */
+  kana: string
   ticker: string
   industryId: string
   monogram: string
@@ -47,6 +49,8 @@ export interface Company {
 export interface Industry {
   id: string
   name: string
+  /** 検索用の読み仮名 */
+  kana: string
   icon: string
   color: string
   majors: string[]

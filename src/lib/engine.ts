@@ -71,11 +71,19 @@ export const tierRate = (map: ProgressMap, kind: QuizKind, tier: Tier) =>
 export const tierCleared = (map: ProgressMap, kind: QuizKind, tier: Tier) =>
   tierRate(map, kind, tier) >= 1
 
-/** 前の級を全クリアしていないと次の級には進めない */
-export function tierUnlocked(map: ProgressMap, kind: QuizKind, tier: Tier): boolean {
+/**
+ * 級の解放判定（対象ごと）。
+ * その企業/業界について前の級を全クリアしていないと次の級には進めない。
+ */
+export function targetTierUnlocked(
+  map: ProgressMap,
+  kind: QuizKind,
+  targetId: string,
+  tier: Tier,
+): boolean {
   const idx = TIERS.indexOf(tier)
   if (idx <= 0) return true
-  return tierCleared(map, kind, TIERS[idx - 1])
+  return clearRate(map, questionsOf(kind, TIERS[idx - 1], targetId)) >= 1
 }
 
 /** 全級・全問クリアした企業（完全クリア） */
@@ -134,7 +142,7 @@ export function buildSession(
   if (cfg.scope === 'favorites') {
     const keys = new Set(favorites.units)
     pool = QUESTIONS.filter((q) => {
-      if (!tierUnlocked(map, q.kind, q.tier)) return false
+      if (!targetTierUnlocked(map, q.kind, q.targetId, q.tier)) return false
       if (keys.has(unitKey(q))) return true
       if (q.kind === 'company' && favorites.companies.includes(q.targetId)) return true
       if (q.kind === 'industry' && favorites.industries.includes(q.targetId)) return true
@@ -142,7 +150,9 @@ export function buildSession(
     })
   } else if (cfg.scope === 'mixed') {
     // 企業・業界内で、解放済みの級からごちゃまぜ
-    pool = QUESTIONS.filter((q) => q.kind === cfg.kind && tierUnlocked(map, q.kind, q.tier))
+    pool = QUESTIONS.filter(
+      (q) => q.kind === cfg.kind && targetTierUnlocked(map, q.kind, q.targetId, q.tier),
+    )
     if (cfg.targetId) pool = pool.filter((q) => q.targetId === cfg.targetId)
   } else if (cfg.scope === 'tier') {
     pool = questionsOf(cfg.kind!, cfg.tier!)

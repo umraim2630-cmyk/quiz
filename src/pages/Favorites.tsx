@@ -59,8 +59,8 @@ export function Favorites() {
                 </span>
                 <span className="fav-name">{c.name}</span>
                 <div className="fav-actions">
-                  <Link className="btn-secondary btn-sm" to={`/play?scope=mixed&kind=company&target=${c.id}&filter=all&shuffle=1`}>
-                    クイズへ
+                  <Link className="btn-secondary btn-sm" to={`/company/${c.id}`}>
+                    開く
                   </Link>
                   <button className={`fav-btn ${on ? 'on' : ''}`} onClick={() => toggleFavCompany(c.id)}>
                     <Icon name="star" size={18} filled={on} />
@@ -92,8 +92,8 @@ export function Favorites() {
                 </span>
                 <span className="fav-name">{i.name}</span>
                 <div className="fav-actions">
-                  <Link className="btn-secondary btn-sm" to={`/play?scope=mixed&kind=industry&target=${i.id}&filter=all&shuffle=1`}>
-                    クイズへ
+                  <Link className="btn-secondary btn-sm" to={`/industry/${i.id}`}>
+                    開く
                   </Link>
                   <button className={`fav-btn ${on ? 'on' : ''}`} onClick={() => toggleFavIndustry(i.id)}>
                     <Icon name="star" size={18} filled={on} />

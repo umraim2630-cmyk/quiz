@@ -1,62 +1,44 @@
-import { NavLink, Outlet, useNavigate } from 'react-router-dom'
-import { useApp } from '../context/AppContext'
+import { NavLink, Outlet } from 'react-router-dom'
 import { Icon } from './Icon'
 
+/** アプリシェル: ガラス調ヘッダー + 下部フローティングタブバー */
 export function Layout() {
-  const { state, logout } = useApp()
-  const navigate = useNavigate()
-
-  const onLogout = () => {
-    logout()
-    navigate('/login')
-  }
-
   return (
     <div className="app-shell">
-      <header className="topbar">
+      <header className="glass-top">
         <NavLink to="/" className="brand">
           <span className="brand-mark">B</span>
           <span>BizQuiz</span>
         </NavLink>
-        <nav className="topnav">
-          <NavLink to="/" end>
-            <Icon name="home" size={17} />
-            <span>ホーム</span>
-          </NavLink>
-          <NavLink to="/company">
-            <Icon name="building" size={17} />
-            <span>企業クイズ</span>
-          </NavLink>
-          <NavLink to="/industry">
-            <Icon name="globe" size={17} />
-            <span>業界クイズ</span>
-          </NavLink>
-          <NavLink to="/favorites">
-            <Icon name="star" size={17} />
-            <span>お気に入り</span>
-          </NavLink>
-          <NavLink to="/progress">
-            <Icon name="chart" size={17} />
-            <span>進捗率</span>
-          </NavLink>
-          <NavLink to="/settings">
-            <Icon name="gear" size={17} />
-            <span>設定</span>
-          </NavLink>
-        </nav>
-        <div className="topbar-user">
-          <span className="user-name">{state.user?.name}</span>
-          <button className="btn-ghost" onClick={onLogout}>
-            ログアウト
-          </button>
-        </div>
+        <NavLink to="/settings" className="gear-btn" aria-label="設定">
+          <Icon name="gear" size={19} />
+        </NavLink>
       </header>
       <main className="content">
         <Outlet />
       </main>
-      <footer className="footer">
-        <span>BizQuiz — クイズで身につく企業・業界研究（月額980円）</span>
-      </footer>
+      <nav className="tabbar" aria-label="メインナビゲーション">
+        <NavLink to="/" end>
+          <Icon name="home" size={21} />
+          <span>ホーム</span>
+        </NavLink>
+        <NavLink to="/company">
+          <Icon name="building" size={21} />
+          <span>企業</span>
+        </NavLink>
+        <NavLink to="/industry">
+          <Icon name="globe" size={21} />
+          <span>業界</span>
+        </NavLink>
+        <NavLink to="/favorites">
+          <Icon name="star" size={21} />
+          <span>お気に入り</span>
+        </NavLink>
+        <NavLink to="/progress">
+          <Icon name="chart" size={21} />
+          <span>進捗率</span>
+        </NavLink>
+      </nav>
     </div>
   )
 }

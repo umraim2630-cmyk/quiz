@@ -2,116 +2,119 @@ import { Link } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 import { Icon } from '../components/Icon'
 import { Meter } from '../components/Meter'
-import { COMPANIES } from '../data/companies'
-import { INDUSTRIES } from '../data/industries'
-import { overallStats, questionsOf, tierRate, wrongCount } from '../lib/engine'
+import { overallStats, wrongCount } from '../lib/engine'
 import { QUESTIONS } from '../lib/questionGen'
-import { TIERS, TIER_LABELS } from '../types'
 
+/**
+ * ホーム = 「今日の学習の起点」。
+ * 一覧・探索は企業/業界タブ、集計は進捗タブに寄せ、ここでは
+ * 続きから・復習・練習・ランダムといったアクションだけを置く。
+ */
 export function Home() {
   const { state } = useApp()
   const { cleared, total } = overallStats(state.progress)
   const wrong = wrongCount(state.progress, QUESTIONS)
   const bookmarked = state.bookmarks.length
+  const last = state.lastSession
 
   return (
     <div className="page">
-      <div>
+      <div className="large-title">
         <h1>こんにちは、{state.user?.name} さん</h1>
-        <p className="muted">今日も1問10秒から。クイズで企業・業界の解像度を上げましょう。</p>
+        <p className="muted">今日も1問10秒から始めましょう。</p>
       </div>
 
-      <section className="stat-grid">
-        <div className="stat-card accent">
+      <Link to="/progress" className="card summary-card-link">
+        <div className="summary-row">
           <span className="stat-ic prime-ic">
             <Icon name="trophy" size={22} />
           </span>
           <div style={{ flex: 1 }}>
-            <div className="stat-title">総クリア数</div>
-            <Meter rate={total ? cleared / total : 0} label={`${cleared} / ${total} 問`} />
+            <div className="stat-title">学習サマリー</div>
+            <Meter rate={total ? cleared / total : 0} label={`${cleared} / ${total} 問クリア`} />
           </div>
+          <span className="chev">›</span>
         </div>
-        <Link to="/play?scope=mixed&kind=company&filter=wrong&shuffle=1" className="stat-card">
-          <span className="stat-ic warn-ic">
-            <Icon name="refresh" size={22} />
-          </span>
-          <div>
-            <div className="stat-title">
-              間違えた問題 <strong className="stat-num">{wrong}</strong>
-            </div>
-            <div className="stat-sub">間違いだけを復習する →</div>
-          </div>
-        </Link>
-        <Link to="/play?scope=mixed&kind=company&filter=bookmarked&practice=1&shuffle=1" className="stat-card">
-          <span className="stat-ic prime-ic">
-            <Icon name="bookmark" size={22} />
-          </span>
-          <div>
-            <div className="stat-title">
-              ブックマーク <strong className="stat-num">{bookmarked}</strong>
-            </div>
-            <div className="stat-sub">ブックマーク練習へ →</div>
-          </div>
-        </Link>
-      </section>
+      </Link>
 
-      <section className="cat-grid">
-        <Link to="/company" className="cat-card">
-          <span className="cat-ic">
-            <Icon name="building" size={26} />
+      {last && (
+        <Link to={last.path} className="resume-card">
+          <span className="resume-ic">
+            <Icon name="play" size={20} />
           </span>
-          <div className="cat-body">
-            <div className="cat-name">企業クイズ</div>
-            <p className="muted small">上場企業{COMPANIES.length}社 × 初級・中級・上級（全{questionsOf('company').length}問）</p>
-            <div className="cat-meters">
-              {TIERS.map((t) => (
-                <div className="cat-meter" key={t}>
-                  <span className="cat-meter-label">{TIER_LABELS[t]}</span>
-                  <Meter rate={tierRate(state.progress, 'company', t)} />
-                </div>
-              ))}
-            </div>
+          <div style={{ flex: 1 }}>
+            <div className="resume-label">続きから</div>
+            <div className="resume-title">{last.label}</div>
           </div>
+          <span className="chev light">›</span>
         </Link>
-        <Link to="/industry" className="cat-card">
-          <span className="cat-ic">
-            <Icon name="globe" size={26} />
-          </span>
-          <div className="cat-body">
-            <div className="cat-name">業界クイズ</div>
-            <p className="muted small">{INDUSTRIES.length}業界 × 初級・中級・上級（全{questionsOf('industry').length}問）</p>
-            <div className="cat-meters">
-              {TIERS.map((t) => (
-                <div className="cat-meter" key={t}>
-                  <span className="cat-meter-label">{TIER_LABELS[t]}</span>
-                  <Meter rate={tierRate(state.progress, 'industry', t)} />
-                </div>
-              ))}
-            </div>
-          </div>
-        </Link>
-      </section>
+      )}
 
       <section>
         <div className="section-head">
           <span className="sec-ic">
-            <Icon name="shuffle" size={18} />
+            <Icon name="zap" size={18} />
           </span>
-          <h2>ランダム出題</h2>
-          <span className="muted">解放済みの級からごちゃまぜで出題します</span>
+          <h2>今日の学習</h2>
         </div>
-        <div className="quick-grid">
-          <Link className="quick-card" to="/play?scope=mixed&kind=company&filter=all&shuffle=1">
-            <Icon name="building" size={18} />
-            企業ごちゃまぜ
+        <div className="action-list">
+          <Link
+            to={wrong ? '/play?scope=mixed&kind=company&filter=wrong&shuffle=1' : '#'}
+            className={`action-row ${wrong === 0 ? 'disabled-link' : ''}`}
+          >
+            <span className="stat-ic warn-ic">
+              <Icon name="refresh" size={20} />
+            </span>
+            <div className="action-main">
+              <div className="action-title">間違えた問題を復習</div>
+              <div className="action-sub">{wrong > 0 ? `${wrong}問が復習待ちです` : '復習待ちはありません'}</div>
+            </div>
+            <span className="chev">›</span>
           </Link>
-          <Link className="quick-card" to="/play?scope=mixed&kind=industry&filter=all&shuffle=1">
-            <Icon name="globe" size={18} />
-            業界ごちゃまぜ
+          <Link
+            to={bookmarked ? '/play?scope=mixed&kind=company&filter=bookmarked&practice=1&shuffle=1' : '#'}
+            className={`action-row ${bookmarked === 0 ? 'disabled-link' : ''}`}
+          >
+            <span className="stat-ic prime-ic">
+              <Icon name="bookmark" size={20} />
+            </span>
+            <div className="action-main">
+              <div className="action-title">ブックマーク練習</div>
+              <div className="action-sub">
+                {bookmarked > 0 ? `${bookmarked}問を練習（クリア率に影響しません）` : 'クイズ中にしおりで追加できます'}
+              </div>
+            </div>
+            <span className="chev">›</span>
           </Link>
-          <Link className="quick-card" to="/favorites">
-            <Icon name="star" size={18} />
-            お気に入りから出題
+          <Link to="/play?scope=mixed&kind=company&filter=all&shuffle=1" className="action-row">
+            <span className="stat-ic prime-ic">
+              <Icon name="shuffle" size={20} />
+            </span>
+            <div className="action-main">
+              <div className="action-title">企業ごちゃまぜ</div>
+              <div className="action-sub">解放済みの級からランダムに15問</div>
+            </div>
+            <span className="chev">›</span>
+          </Link>
+          <Link to="/play?scope=mixed&kind=industry&filter=all&shuffle=1" className="action-row">
+            <span className="stat-ic prime-ic">
+              <Icon name="globe" size={20} />
+            </span>
+            <div className="action-main">
+              <div className="action-title">業界ごちゃまぜ</div>
+              <div className="action-sub">解放済みの級からランダムに15問</div>
+            </div>
+            <span className="chev">›</span>
+          </Link>
+          <Link to="/play?scope=favorites&filter=all&shuffle=1" className="action-row">
+            <span className="stat-ic warn-ic">
+              <Icon name="star" size={20} />
+            </span>
+            <div className="action-main">
+              <div className="action-title">お気に入りから出題</div>
+              <div className="action-sub">登録した企業・業界・級から出題</div>
+            </div>
+            <span className="chev">›</span>
           </Link>
         </div>
       </section>
