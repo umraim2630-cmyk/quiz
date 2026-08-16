@@ -1,88 +1,92 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useReducer,
-} from 'react'
+import { createContext, useCallback, useContext, useEffect, useMemo, useReducer } from 'react'
 import type { ReactNode } from 'react'
-import type { Scout, User, WebResume } from '../types'
-import { applyAnswer, getProgress, type ProgressMap } from '../lib/quizEngine'
-import { clearState, loadState, saveState, type PersistedState } from '../lib/storage'
-import { seedScouts } from '../data/scouts'
-
-interface AppState extends PersistedState {}
+import type { QuizKind, Tier, User } from '../types'
+import { applyAnswer, getProgress, questionsOf, type ProgressMap } from '../lib/engine'
+import { clearState, defaultState, loadState, saveState, type PersistedState } from '../lib/storage'
 
 type Action =
   | { type: 'login'; user: User }
   | { type: 'logout' }
+  | { type: 'subscribe' }
+  | { type: 'cancelSubscription' }
   | { type: 'answer'; questionId: string; correct: boolean }
-  | { type: 'saveResume'; resume: WebResume }
-  | { type: 'readScout'; scoutId: string }
-  | { type: 'reply'; scoutId: string; text: string }
+  | { type: 'toggleBookmark'; questionId: string }
+  | { type: 'toggleFav'; list: 'favCompanies' | 'favIndustries' | 'favUnits'; id: string }
+  | { type: 'setProgressSelection'; ids: string[] }
+  | { type: 'updateAccount'; name: string }
+  | { type: 'resetProgress' }
+  | { type: 'demoClearTier'; kind: QuizKind; tier: Tier }
 
-function reducer(state: AppState, action: Action): AppState {
+const toggle = (arr: string[], id: string) =>
+  arr.includes(id) ? arr.filter((x) => x !== id) : [...arr, id]
+
+function reducer(state: PersistedState, action: Action): PersistedState {
   switch (action.type) {
     case 'login':
+      return { ...state, user: action.user }
+    case 'logout':
+      return defaultState()
+    case 'subscribe': {
+      const now = new Date()
+      const next = new Date(now)
+      next.setMonth(next.getMonth() + 1)
       return {
         ...state,
-        user: action.user,
-        // 既にスカウトがあれば維持、無ければ初期スカウトを付与
-        scouts: state.scouts.length ? state.scouts : seedScouts(),
+        subscription: {
+          active: true,
+          since: now.toISOString(),
+          nextBilling: next.toISOString(),
+        },
       }
-    case 'logout':
-      return { user: null, progress: {}, resume: null, scouts: [] }
+    }
+    case 'cancelSubscription':
+      return { ...state, subscription: { active: false, since: state.subscription.since, nextBilling: null } }
     case 'answer': {
       const prev = getProgress(state.progress, action.questionId)
-      const next = applyAnswer(prev, action.correct)
-      const progress: ProgressMap = { ...state.progress, [action.questionId]: next }
+      const progress: ProgressMap = {
+        ...state.progress,
+        [action.questionId]: applyAnswer(prev, action.correct),
+      }
       return { ...state, progress }
     }
-    case 'saveResume':
-      return { ...state, resume: action.resume }
-    case 'readScout':
-      return {
-        ...state,
-        scouts: state.scouts.map((s) =>
-          s.id === action.scoutId ? { ...s, read: true } : s,
-        ),
+    case 'toggleBookmark':
+      return { ...state, bookmarks: toggle(state.bookmarks, action.questionId) }
+    case 'toggleFav':
+      return { ...state, [action.list]: toggle(state[action.list], action.id) }
+    case 'setProgressSelection':
+      return { ...state, progressSelection: action.ids }
+    case 'updateAccount':
+      return state.user ? { ...state, user: { ...state.user, name: action.name } } : state
+    case 'resetProgress':
+      return { ...state, progress: {}, bookmarks: [] }
+    case 'demoClearTier': {
+      // デモ用: 指定した級を全クリア扱いにする（級の解放条件の確認用）
+      const progress = { ...state.progress }
+      for (const q of questionsOf(action.kind, action.tier)) {
+        progress[q.id] = { streak: 2, correctCount: 2, wrongCount: 0, lastWrong: false, cleared: true }
       }
-    case 'reply': {
-      const at = new Date().toISOString().slice(0, 10)
-      return {
-        ...state,
-        scouts: state.scouts.map((s) => {
-          if (s.id !== action.scoutId) return s
-          const thread = [...s.thread, { from: 'me' as const, text: action.text, at }]
-          // 簡易な自動返信でメッセージ体験をデモ
-          const reply = autoReply(s)
-          thread.push({ from: 'them' as const, text: reply, at })
-          return { ...s, thread, read: true }
-        }),
-      }
+      return { ...state, progress }
     }
     default:
       return state
   }
 }
 
-function autoReply(scout: Scout): string {
-  if (scout.sender === 'agent') {
-    return 'ありがとうございます！ではまず、志望業界といつ頃から動きたいかを教えてください。あなたのクイズ達成状況に合う求人をお送りします。'
-  }
-  return 'ご返信ありがとうございます。では日程調整のため、来週で空いている候補日をいくつか教えていただけますか？オンラインで30分ほどを想定しています。'
-}
-
 interface AppContextValue {
-  state: AppState
-  login: (email: string, name: string, fromParentService: boolean) => void
+  state: PersistedState
+  login: (email: string, name: string) => void
   logout: () => void
+  subscribe: () => void
+  cancelSubscription: () => void
   answer: (questionId: string, correct: boolean) => void
-  saveResume: (resume: WebResume) => void
-  readScout: (scoutId: string) => void
-  reply: (scoutId: string, text: string) => void
-  resumeCompleted: boolean
+  toggleBookmark: (questionId: string) => void
+  toggleFavCompany: (id: string) => void
+  toggleFavIndustry: (id: string) => void
+  toggleFavUnit: (key: string) => void
+  setProgressSelection: (ids: string[]) => void
+  updateAccount: (name: string) => void
+  resetProgress: () => void
+  demoClearTier: (kind: QuizKind, tier: Tier) => void
 }
 
 const AppContext = createContext<AppContextValue | null>(null)
@@ -94,43 +98,79 @@ export function AppProvider({ children }: { children: ReactNode }) {
     saveState(state)
   }, [state])
 
-  const login = useCallback((email: string, name: string, fromParentService: boolean) => {
-    dispatch({ type: 'login', user: { email, name, fromParentService } })
+  const login = useCallback((email: string, name: string) => {
+    dispatch({ type: 'login', user: { email, name } })
   }, [])
-
   const logout = useCallback(() => {
     clearState()
     dispatch({ type: 'logout' })
   }, [])
-
-  const answer = useCallback((questionId: string, correct: boolean) => {
-    dispatch({ type: 'answer', questionId, correct })
-  }, [])
-
-  const saveResume = useCallback((resume: WebResume) => {
-    dispatch({ type: 'saveResume', resume })
-  }, [])
-
-  const readScout = useCallback((scoutId: string) => {
-    dispatch({ type: 'readScout', scoutId })
-  }, [])
-
-  const reply = useCallback((scoutId: string, text: string) => {
-    dispatch({ type: 'reply', scoutId, text })
-  }, [])
+  const subscribe = useCallback(() => dispatch({ type: 'subscribe' }), [])
+  const cancelSubscription = useCallback(() => dispatch({ type: 'cancelSubscription' }), [])
+  const answer = useCallback(
+    (questionId: string, correct: boolean) => dispatch({ type: 'answer', questionId, correct }),
+    [],
+  )
+  const toggleBookmark = useCallback(
+    (questionId: string) => dispatch({ type: 'toggleBookmark', questionId }),
+    [],
+  )
+  const toggleFavCompany = useCallback(
+    (id: string) => dispatch({ type: 'toggleFav', list: 'favCompanies', id }),
+    [],
+  )
+  const toggleFavIndustry = useCallback(
+    (id: string) => dispatch({ type: 'toggleFav', list: 'favIndustries', id }),
+    [],
+  )
+  const toggleFavUnit = useCallback(
+    (key: string) => dispatch({ type: 'toggleFav', list: 'favUnits', id: key }),
+    [],
+  )
+  const setProgressSelection = useCallback(
+    (ids: string[]) => dispatch({ type: 'setProgressSelection', ids }),
+    [],
+  )
+  const updateAccount = useCallback((name: string) => dispatch({ type: 'updateAccount', name }), [])
+  const resetProgress = useCallback(() => dispatch({ type: 'resetProgress' }), [])
+  const demoClearTier = useCallback(
+    (kind: QuizKind, tier: Tier) => dispatch({ type: 'demoClearTier', kind, tier }),
+    [],
+  )
 
   const value = useMemo<AppContextValue>(
     () => ({
       state,
       login,
       logout,
+      subscribe,
+      cancelSubscription,
       answer,
-      saveResume,
-      readScout,
-      reply,
-      resumeCompleted: !!state.resume?.completed,
+      toggleBookmark,
+      toggleFavCompany,
+      toggleFavIndustry,
+      toggleFavUnit,
+      setProgressSelection,
+      updateAccount,
+      resetProgress,
+      demoClearTier,
     }),
-    [state, login, logout, answer, saveResume, readScout, reply],
+    [
+      state,
+      login,
+      logout,
+      subscribe,
+      cancelSubscription,
+      answer,
+      toggleBookmark,
+      toggleFavCompany,
+      toggleFavIndustry,
+      toggleFavUnit,
+      setProgressSelection,
+      updateAccount,
+      resetProgress,
+      demoClearTier,
+    ],
   )
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>

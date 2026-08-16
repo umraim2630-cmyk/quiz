@@ -148,6 +148,45 @@ const PATHS: Record<string, React.ReactNode> = {
       <path d="M8 13h8M8 17h8" />
     </>
   ),
+  bookmark: <path d="M6 3h12v18l-6-4.2L6 21V3Z" />,
+  star: <path d="M12 2l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17l-5.9 3 1.2-6.5L2.5 8.9 9.1 8 12 2Z" />,
+  clock: (
+    <>
+      <circle cx="12" cy="12" r="9.5" />
+      <path d="M12 6.5V12l3.5 2" />
+    </>
+  ),
+  play: <path d="M7 4.5v15l12-7.5L7 4.5Z" />,
+  shuffle: (
+    <>
+      <path d="M3 7h2.5a4 4 0 0 1 3.2 1.6l6.6 6.8A4 4 0 0 0 18.5 17H21" />
+      <path d="m18 14 3 3-3 3" />
+      <path d="M3 17h2.5a4 4 0 0 0 3.2-1.6l.8-.9" />
+      <path d="M13.5 8.5l.8-.9A4 4 0 0 1 17.5 7H21" />
+      <path d="m18 4 3 3-3 3" />
+    </>
+  ),
+  trophy: (
+    <>
+      <path d="M8 21h8M12 17v4" />
+      <path d="M7 4h10v5a5 5 0 0 1-10 0V4Z" />
+      <path d="M7 6H4.5a2.2 2.2 0 0 0 2 4.2H7M17 6h2.5a2.2 2.2 0 0 1-2 4.2H17" />
+    </>
+  ),
+  creditCard: (
+    <>
+      <rect x="2" y="5" width="20" height="14" rx="2" />
+      <path d="M2 10h20M6 15h4" />
+    </>
+  ),
+  gear: (
+    <>
+      <path d="M4 7h16M4 12h16M4 17h16" />
+      <circle cx="9" cy="7" r="2" fill="var(--surface, #fff)" />
+      <circle cx="15" cy="12" r="2" fill="var(--surface, #fff)" />
+      <circle cx="10" cy="17" r="2" fill="var(--surface, #fff)" />
+    </>
+  ),
 }
 
 export const STAR_PATH =

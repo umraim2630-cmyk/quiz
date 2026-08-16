@@ -5,7 +5,6 @@ import { Icon } from './Icon'
 export function Layout() {
   const { state, logout } = useApp()
   const navigate = useNavigate()
-  const unread = state.scouts.filter((s) => !s.read).length
 
   const onLogout = () => {
     logout()
@@ -16,26 +15,33 @@ export function Layout() {
     <div className="app-shell">
       <header className="topbar">
         <NavLink to="/" className="brand">
-          <span className="brand-mark">Q</span>
-          <span>Kuchikomi Quiz</span>
+          <span className="brand-mark">B</span>
+          <span>BizQuiz</span>
         </NavLink>
         <nav className="topnav">
           <NavLink to="/" end>
             <Icon name="home" size={17} />
             <span>ホーム</span>
           </NavLink>
-          <NavLink to="/quiz">
-            <Icon name="zap" size={17} />
-            <span>クイズ</span>
+          <NavLink to="/company">
+            <Icon name="building" size={17} />
+            <span>企業クイズ</span>
           </NavLink>
-          <NavLink to="/scouts" className="nav-scout">
-            <Icon name="mail" size={17} />
-            <span>スカウト</span>
-            {unread > 0 && <span className="badge">{unread}</span>}
+          <NavLink to="/industry">
+            <Icon name="globe" size={17} />
+            <span>業界クイズ</span>
           </NavLink>
-          <NavLink to="/resume">
-            <Icon name="fileText" size={17} />
-            <span>履歴書</span>
+          <NavLink to="/favorites">
+            <Icon name="star" size={17} />
+            <span>お気に入り</span>
+          </NavLink>
+          <NavLink to="/progress">
+            <Icon name="chart" size={17} />
+            <span>進捗率</span>
+          </NavLink>
+          <NavLink to="/settings">
+            <Icon name="gear" size={17} />
+            <span>設定</span>
           </NavLink>
         </nav>
         <div className="topbar-user">
@@ -49,7 +55,7 @@ export function Layout() {
         <Outlet />
       </main>
       <footer className="footer">
-        <span>口コミデータ × クイズで、入社後ギャップのない就活を。</span>
+        <span>BizQuiz — クイズで身につく企業・業界研究（月額980円）</span>
       </footer>
     </div>
   )

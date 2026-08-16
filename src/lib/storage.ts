@@ -1,33 +1,41 @@
-import type { Scout, User, WebResume } from '../types'
-import type { ProgressMap } from './quizEngine'
+import type { Subscription, User } from '../types'
+import type { ProgressMap } from './engine'
 
 // ------------------------------------------------------------------
-// localStorage を使った簡易永続化レイヤー。
-// 実サービスでは本体サービスのAPI/DBに置き換わる。
+// localStorage による簡易永続化。
+// 本番ではアカウント基盤・決済基盤・DBに置き換わる。
 // ------------------------------------------------------------------
 
-const KEY = 'kuchikomi-quiz-state-v4'
+const KEY = 'bizquiz-state-v1'
 
 export interface PersistedState {
   user: User | null
+  subscription: Subscription
   progress: ProgressMap
-  resume: WebResume | null
-  scouts: Scout[]
+  bookmarks: string[]
+  favCompanies: string[]
+  favIndustries: string[]
+  favUnits: string[]
+  /** 進捗確認で選択した企業 */
+  progressSelection: string[]
 }
 
 export const defaultState = (): PersistedState => ({
   user: null,
+  subscription: { active: false, since: null, nextBilling: null },
   progress: {},
-  resume: null,
-  scouts: [],
+  bookmarks: [],
+  favCompanies: [],
+  favIndustries: [],
+  favUnits: [],
+  progressSelection: [],
 })
 
 export function loadState(): PersistedState {
   try {
     const raw = localStorage.getItem(KEY)
     if (!raw) return defaultState()
-    const parsed = JSON.parse(raw) as Partial<PersistedState>
-    return { ...defaultState(), ...parsed }
+    return { ...defaultState(), ...(JSON.parse(raw) as Partial<PersistedState>) }
   } catch {
     return defaultState()
   }
@@ -37,7 +45,7 @@ export function saveState(state: PersistedState): void {
   try {
     localStorage.setItem(KEY, JSON.stringify(state))
   } catch {
-    // 保存に失敗しても致命的ではないため無視
+    /* noop */
   }
 }
 
