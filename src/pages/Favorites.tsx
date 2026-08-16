@@ -46,7 +46,7 @@ export function Favorites() {
           <span className="sec-ic">
             <Icon name="building" size={18} />
           </span>
-          <h2>特定企業</h2>
+          <h2>企業</h2>
           <span className="muted">星でお気に入り登録 / 解除</span>
         </div>
         <div className="fav-list">
@@ -77,7 +77,7 @@ export function Favorites() {
           <span className="sec-ic">
             <Icon name="globe" size={18} />
           </span>
-          <h2>特定業界</h2>
+          <h2>業界</h2>
         </div>
         <div className="fav-list">
           {INDUSTRIES.map((i) => {

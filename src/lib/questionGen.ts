@@ -91,7 +91,7 @@ function companyQuestions(c: Company, all: Company[]): Question[] {
       prompt: `${c.name}の証券コード（銘柄コード）は？`,
       choices: catChoices(c.ticker, others.map((o) => o.ticker)),
       answerIndex: 0,
-      explanation: `${c.name}の証券コードは${c.ticker}。株式市場では4桁のコードで銘柄を識別します。`,
+      explanation: `${c.name}の証券コードは${c.ticker}。株式市場では4桁のコードで銘柄を識別します。\n【豆知識】${c.trivia[0]}`,
     },
     {
       prompt: `${c.name}の本社所在地は？`,
@@ -103,7 +103,7 @@ function companyQuestions(c: Company, all: Company[]): Question[] {
       prompt: `${c.name}の設立（創業）年は？`,
       choices: catChoices(String(c.founded) + '年', others.map((o) => String(o.founded) + '年')),
       answerIndex: 0,
-      explanation: `${c.founded}年に設立（創業）。企業の歴史の長さは事業の変遷とあわせて押さえましょう。`,
+      explanation: `${c.founded}年に設立（創業）。企業の歴史の長さは事業の変遷とあわせて押さえましょう。\n【豆知識】${c.trivia[1]}`,
     },
     {
       prompt: `${c.name}が主に属する業界は？`,
@@ -121,7 +121,7 @@ function companyQuestions(c: Company, all: Company[]): Question[] {
       prompt: `「${c.brands[0]}」を展開している企業は？`,
       choices: catChoices(c.name, others.map((o) => o.name)),
       answerIndex: 0,
-      explanation: `${c.brands[0]}は${c.name}のブランド・製品です。`,
+      explanation: `${c.brands[0]}は${c.name}のブランド・製品です。\n【豆知識】${c.trivia[2]}`,
     },
     {
       prompt: `${c.name}の従業員数（連結・概数）に最も近いのは？`,
@@ -139,7 +139,7 @@ function companyQuestions(c: Company, all: Company[]): Question[] {
       prompt: `${c.name}の${c.revLabel}（${c.fiscal}・概数）に最も近いのは？`,
       choices: numChoices(c.revenueOku, fmtOku, [0.5, 2, 10]),
       answerIndex: 0,
-      explanation: `${c.revLabel}は${fmtOku(c.revenueOku)}（${c.fiscal}）。まずは売上規模の桁感覚をつかみましょう。`,
+      explanation: `${c.revLabel}は${fmtOku(c.revenueOku)}（${c.fiscal}）。まずは売上規模の桁感覚をつかみましょう。\n【推移】${c.trend}`,
     },
     {
       prompt: `${indName}業界に属する企業は？`,
@@ -184,7 +184,7 @@ function companyQuestions(c: Company, all: Company[]): Question[] {
       prompt: `${c.name}に関する近年の注目トピックは？`,
       choices: catChoices(c.topic, others.map((o) => o.topic)),
       answerIndex: 0,
-      explanation: `「${c.topic}」が近年の重要テーマです。面接・商談の話題としても頻出です。`,
+      explanation: `「${c.topic}」が近年の重要テーマです。面接・商談の話題としても頻出です。\n【豆知識】${c.trivia[0]}`,
     },
     {
       prompt: `「${c.brands[1]}」を展開している企業は？`,
@@ -220,7 +220,7 @@ function companyQuestions(c: Company, all: Company[]): Question[] {
         [pct(c.growthPct + 12), pct(c.growthPct - 9), pct(-c.growthPct || 5)],
       ),
       answerIndex: 0,
-      explanation: `${c.fiscal}の${c.revLabel}は前期比${pct(c.growthPct)}でした。`,
+      explanation: `${c.fiscal}の${c.revLabel}は前期比${pct(c.growthPct)}でした。\n【推移】${c.trend}`,
     },
   )
 
@@ -232,7 +232,7 @@ function companyQuestions(c: Company, all: Company[]): Question[] {
       prompt: `${c.name}の${c.profLabel}（${c.fiscal}・概数）に最も近いのは？`,
       choices: numChoices(c.profitOku, fmtOku, [0.4, 2.5, 8]),
       answerIndex: 0,
-      explanation: `${c.profLabel}は${fmtOku(c.profitOku)}（${c.fiscal}）。`,
+      explanation: `${c.profLabel}は${fmtOku(c.profitOku)}（${c.fiscal}）。\n【推移】${c.trend}`,
     },
     {
       prompt: `${c.name}の${c.profLabel}率（${c.profLabel}÷${c.revLabel}）に最も近いのは？（${c.fiscal}）`,
@@ -261,7 +261,7 @@ function companyQuestions(c: Company, all: Company[]): Question[] {
         '前期比で約2倍に拡大',
       ],
       answerIndex: 0,
-      explanation: `${c.revLabel}は前期比${pct(c.growthPct)}。増減の背景（市況・製品サイクル等）まで説明できると上級です。`,
+      explanation: `${c.revLabel}は前期比${pct(c.growthPct)}。増減の背景（市況・製品サイクル等）まで説明できると上級です。\n【推移】${c.trend}`,
     },
     {
       prompt: `${c.name}（${c.revLabel}${fmtOku(c.revenueOku)}）と${cmp.name}（${cmp.revLabel}${fmtOku(cmp.revenueOku)}）。売上規模が大きいのは？`,
@@ -288,7 +288,7 @@ function companyQuestions(c: Company, all: Company[]): Question[] {
       prompt: `${c.name}の${c.revLabel}（${c.fiscal}）として最も正確なのは？`,
       choices: numChoices(c.revenueOku, fmtOku, [0.7, 1.5, 3]),
       answerIndex: 0,
-      explanation: `${c.revLabel}は${fmtOku(c.revenueOku)}。近い数値の中から正確に選べれば、規模感は完璧です。`,
+      explanation: `${c.revLabel}は${fmtOku(c.revenueOku)}。近い数値の中から正確に選べれば、規模感は完璧です。\n【推移】${c.trend}`,
     },
     {
       prompt: `${c.name}の${c.profLabel}率は約${margin}%。この数字の読み方として最も適切なのは？`,
@@ -354,7 +354,7 @@ function industryQuestions(ind: Industry, all: Industry[]): Question[] {
       prompt: `${ind.name}業界の規模を示す数字として正しいのは？`,
       choices: ind.sizeChoices,
       answerIndex: 0,
-      explanation: `${ind.sizeText}（概数）。業界の規模感は数字で押さえるのが基本です。`,
+      explanation: `${ind.sizeText}（概数）。業界の規模感は数字で押さえるのが基本です。\n【豆知識】${ind.trivia[0]}`,
     },
     {
       prompt: `${ind.name}業界のビジネスモデルの説明として正しいのは？`,
@@ -390,7 +390,7 @@ function industryQuestions(ind: Industry, all: Industry[]): Question[] {
       prompt: `${rep.name}が属する業界は？`,
       choices: catChoices(ind.name, others.map((o) => o.name)),
       answerIndex: 0,
-      explanation: `${rep.name}は${ind.name}業界の代表的企業です。`,
+      explanation: `${rep.name}は${ind.name}業界の代表的企業です。\n【豆知識】${ind.trivia[1]}`,
     },
   )
 
@@ -448,7 +448,7 @@ function industryQuestions(ind: Industry, all: Industry[]): Question[] {
         [pct(rep.growthPct + 12), pct(rep.growthPct - 9), pct(-rep.growthPct || 6)],
       ),
       answerIndex: 0,
-      explanation: `${rep.name}の${rep.revLabel}は前期比${pct(rep.growthPct)}（${rep.fiscal}）でした。`,
+      explanation: `${rep.name}の${rep.revLabel}は前期比${pct(rep.growthPct)}（${rep.fiscal}）でした。\n【推移】${ind.repTrend}`,
     },
     {
       prompt: `${ind.name}業界の用語「${ind.terms[3].w}」の意味は？`,
@@ -470,7 +470,7 @@ function industryQuestions(ind: Industry, all: Industry[]): Question[] {
       prompt: `${ind.name}業界の代表企業${rep.name}の${rep.revLabel}（${rep.fiscal}・概数）に最も近いのは？`,
       choices: numChoices(rep.revenueOku, fmtOku, [0.5, 2, 10]),
       answerIndex: 0,
-      explanation: `${rep.name}の${rep.revLabel}は${fmtOku(rep.revenueOku)}。業界首位級の規模を基準値として覚えましょう。`,
+      explanation: `${rep.name}の${rep.revLabel}は${fmtOku(rep.revenueOku)}。業界首位級の規模を基準値として覚えましょう。\n【推移】${ind.repTrend}`,
     },
     {
       prompt: `${rep.name}の${rep.profLabel}（${rep.fiscal}・概数）に最も近いのは？`,
@@ -499,7 +499,7 @@ function industryQuestions(ind: Industry, all: Industry[]): Question[] {
         '前期比で約2倍に拡大',
       ],
       answerIndex: 0,
-      explanation: `前期比${pct(rep.growthPct)}。業界のサイクル（例: 製品世代交代、市況）と関連づけて解釈しましょう。`,
+      explanation: `前期比${pct(rep.growthPct)}。業界のサイクル（例: 製品世代交代、市況）と関連づけて解釈しましょう。\n【推移】${ind.repTrend}`,
     },
     {
       prompt: `${rep.name}（利益 ${fmtOku(rep.profitOku)} / 売上 ${fmtOku(rep.revenueOku)}）と${cmp.rep.name}（利益 ${fmtOku(cmp.rep.profitOku)} / 売上 ${fmtOku(cmp.rep.revenueOku)}）。利益率が高いのは？`,

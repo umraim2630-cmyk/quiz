@@ -17,6 +17,7 @@ type Action =
   | { type: 'resetProgress' }
   | { type: 'demoClearTier'; kind: QuizKind; tier: Tier }
   | { type: 'setLastSession'; path: string; label: string }
+  | { type: 'completeOnboarding' }
 
 const toggle = (arr: string[], id: string) =>
   arr.includes(id) ? arr.filter((x) => x !== id) : [...arr, id]
@@ -70,6 +71,8 @@ function reducer(state: PersistedState, action: Action): PersistedState {
     }
     case 'setLastSession':
       return { ...state, lastSession: { path: action.path, label: action.label } }
+    case 'completeOnboarding':
+      return { ...state, onboarded: true }
     default:
       return state
   }
@@ -91,6 +94,7 @@ interface AppContextValue {
   resetProgress: () => void
   demoClearTier: (kind: QuizKind, tier: Tier) => void
   setLastSession: (path: string, label: string) => void
+  completeOnboarding: () => void
 }
 
 const AppContext = createContext<AppContextValue | null>(null)
@@ -145,6 +149,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     (path: string, label: string) => dispatch({ type: 'setLastSession', path, label }),
     [],
   )
+  const completeOnboarding = useCallback(() => dispatch({ type: 'completeOnboarding' }), [])
 
   const value = useMemo<AppContextValue>(
     () => ({
@@ -163,6 +168,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       resetProgress,
       demoClearTier,
       setLastSession,
+      completeOnboarding,
     }),
     [
       state,
@@ -180,6 +186,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       resetProgress,
       demoClearTier,
       setLastSession,
+      completeOnboarding,
     ],
   )
 

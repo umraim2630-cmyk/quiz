@@ -20,6 +20,8 @@ export interface PersistedState {
   progressSelection: string[]
   /** 直近のクイズセッション（ホームの「続きから」用） */
   lastSession: { path: string; label: string } | null
+  /** 初回オンボーディングを完了したか */
+  onboarded: boolean
 }
 
 export const defaultState = (): PersistedState => ({
@@ -32,6 +34,7 @@ export const defaultState = (): PersistedState => ({
   favUnits: [],
   progressSelection: [],
   lastSession: null,
+  onboarded: false,
 })
 
 export function loadState(): PersistedState {

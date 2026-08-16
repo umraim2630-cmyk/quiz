@@ -3,6 +3,7 @@ import { useApp } from './context/AppContext'
 import { Layout } from './components/Layout'
 import { Login } from './pages/Login'
 import { Subscribe } from './pages/Subscribe'
+import { Onboarding } from './pages/Onboarding'
 import { Home } from './pages/Home'
 import { TargetList } from './pages/TargetList'
 import { TargetTiers } from './pages/TargetTiers'
@@ -31,6 +32,16 @@ export function App() {
       <Routes>
         <Route path="/subscribe" element={<Subscribe />} />
         <Route path="*" element={<Navigate to="/subscribe" replace />} />
+      </Routes>
+    )
+  }
+
+  // 初回起動: オンボーディング
+  if (!state.onboarded) {
+    return (
+      <Routes>
+        <Route path="/welcome" element={<Onboarding />} />
+        <Route path="*" element={<Navigate to="/welcome" replace />} />
       </Routes>
     )
   }

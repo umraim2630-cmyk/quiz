@@ -43,6 +43,10 @@ export interface Company {
   employees: number
   revLabel: string
   profLabel: string
+  /** 記憶に残りやすくする豆知識（解説に差し込む） */
+  trivia: string[]
+  /** 売上等の推移の説明（数字問題の解説に差し込む） */
+  trend: string
 }
 
 /** 業界マスタ */
@@ -74,6 +78,10 @@ export interface Industry {
     revLabel: string
     profLabel: string
   }
+  /** 豆知識 */
+  trivia: string[]
+  /** 代表企業の業績推移 */
+  repTrend: string
 }
 
 /** クイズの編（ユニット）。企業クイズ=1企業1編 / 業界クイズ=1業界1編 */

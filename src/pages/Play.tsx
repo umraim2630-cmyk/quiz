@@ -263,7 +263,15 @@ export function Play() {
                 />
                 {selected === q.answerIndex ? '正解！' : timedOut ? '時間切れ' : '不正解'}
               </div>
-              <p>{q.explanation}</p>
+              {q.explanation.split('\n').map((line, li) =>
+                line.startsWith('【') ? (
+                  <p key={li} className="explain-note">
+                    {line}
+                  </p>
+                ) : (
+                  <p key={li}>{line}</p>
+                ),
+              )}
               <button className="btn-primary" onClick={next}>
                 {isLast ? '結果を見る' : '次の問題へ'}
               </button>

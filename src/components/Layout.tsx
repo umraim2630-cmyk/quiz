@@ -10,8 +10,8 @@ export function Layout() {
           <span className="brand-mark">B</span>
           <span>BizQuiz</span>
         </NavLink>
-        <NavLink to="/settings" className="gear-btn" aria-label="設定">
-          <Icon name="gear" size={19} />
+        <NavLink to="/settings" className="gear-btn" aria-label="アカウント・設定">
+          <Icon name="user" size={19} />
         </NavLink>
       </header>
       <main className="content">
